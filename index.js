@@ -36,6 +36,8 @@ const inquirify = () => {
         },
     ]);
 };
+module.exports(answers);
+
     function generateHTML(answers) {
         return `<!DOCTYPE html>
         <html lang="en">
