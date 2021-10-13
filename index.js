@@ -7,7 +7,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 const inquirify = () => {
     return inquirer
-    .prompt[
+    .prompt([
         {
         type: 'input',
         name: 'name',
@@ -33,9 +33,9 @@ const inquirify = () => {
         name: 'addl',
         message: 'Would you like to add an engineer or an intern, or finish building your team?',
         choices: ['Add an intern..', 'Add an engineer..', 'I\'m finished!']
-        }
-    ]
-
+        },
+    ]);
+};
     function generateHTML(answers) {
         return `<!DOCTYPE html>
         <html lang="en">
@@ -55,7 +55,7 @@ const inquirify = () => {
             <div class="row row-cols-3">
                 <div class="col my-2">
                     <div class="card card-body bg-dark">
-                      <h5 class="card-title text-center">Manager</h5>
+                      <h5 class="card-title text-light text-center">Manager</h5>
                       <ul class="list-group list-group">
                         <li class="list-group-item">${answers.name}</li>
                         <li class="list-group-item">${answers.email}</li>
@@ -68,5 +68,14 @@ const inquirify = () => {
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script>
         </body>
         </html>
-        `
-    }
+        `;
+    };
+
+    const init = () => {
+        inquirify()
+            .then((answers) => writeFileAsync('index.html', generateHTML(answers)))
+            .then(() => console.log('TeamProfileGO!'))
+            .catch((err) => console.error(err));
+    };
+
+    init();
