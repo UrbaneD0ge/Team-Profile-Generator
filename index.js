@@ -3,6 +3,11 @@ const jest = require('jest');
 const fs = require('fs');
 const util = require('util');
 
+// classes
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern')
+
 const writeFileAsync = util.promisify(fs.writeFile);
 let employees = [];
 
@@ -55,8 +60,6 @@ intQ = [
     }
 ];
 
-module.exports(answers);
-
 function generateHTML(answers) {
     return `<!DOCTYPE html>
     <html lang="en">
@@ -94,13 +97,13 @@ function generateHTML(answers) {
 
 // Declare init fn
 const init = () => {
-    Console.log('TeamProfileGO! \n ****************\n')
-    addEmpl()
+    console.log('TeamProfileGO! \n ****************\n')
+    newEmpl()
 }
 
 // add employees fn
-const addEmpl = async () => {
-    await inquirer.prompt(questions)
+const newEmpl = async () => {
+    await inquirer.prompt(EmpQ)
     .then((response) => {
         let name = response.name;
         let id = response.id;
@@ -113,7 +116,7 @@ const addEmpl = async () => {
         if (role === "Manager") {
             inquirer.prompt(manQ).then((response) => {
                 offc = response.offc;
-                let employee = new Engineer(name, id, email, offc);
+                let employee = new Manager(name, id, email, offc);
                 employees.push(employee);
                 addEmpl(employees);
             });
@@ -129,7 +132,7 @@ const addEmpl = async () => {
         if (role === "Intern") {
             inquirer.prompt(intQ).then((response) => {
                 schl = response.schl;
-                let employee = new Engineer(name, id, email, schl);
+                let employee = new Intern(name, id, email, schl);
                 employees.push(employee);
                 addEmpl(employees);
             });
@@ -143,10 +146,20 @@ const addEmpl = async (array) => {
     .prompt({
             type: 'list',
             name: 'addl',
-            message: 'Would you like to add an engineer or an intern, or finish building your team?',
-            choices: ['Add an intern..', 'Add an engineer..', 'I\'m finished!']
+            message: 'Would you like to add another team member, or finish building your team?',
+            choices: ['Add another team member..', 'I\'m finished!']
             }
-    )
-}
+    ).then(async (response) => {
+        var newEmpl = response.addl;
+        if (await newEmpl === 'Add another team member..') {
+            addEmpl();
+    }
+         fs.writeFile('./dist', generateHTML(array), err) => {
+            if (err) {
+            return console.log(err);
+        } console.log("TeamProfile is GO!");
+    }
+    })
+};
 
 init();
