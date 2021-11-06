@@ -10,13 +10,14 @@ const Intern = require('./lib/Intern')
 
 const writeFileAsync = util.promisify(fs.writeFile);
 let employees = [];
+let ids = [];
 
 // Employee Questions
 const EmpQ = [
     {
     type: 'input',
     name: 'name',
-    message: 'What is the team manager\'s name?'
+    message: 'What is the first employee\'s name?'
     },
     {
     type: 'input',
@@ -29,13 +30,14 @@ const EmpQ = [
     message: 'What is their email address?',
     },
     {
-        type: 'list',
-        name: 'role',
-        message: 'What role does this employee have?',
-        choices: ['Engineer', 'Intern', 'Manager']
+    type: 'list',
+    name: 'role',
+    message: 'What role does this employee have?',
+    choices: ['Engineer', 'Intern', 'Manager']
     }
 ];
 
+// Question sets for the specific employee classes
 manQ = [
     {
         type: 'input',
@@ -143,23 +145,23 @@ const newEmpl = async () => {
 // Looping addEmpl questions
 const addEmpl = async (array) => {
     await inquirer
-    .prompt({
+        .prompt([
+            {
             type: 'list',
             name: 'addl',
             message: 'Would you like to add another team member, or finish building your team?',
             choices: ['Add another team member..', 'I\'m finished!']
             }
-    ).then(async (response) => {
+        ])
+        .then(async (response) => {
         var newEmpl = response.addl;
-        if (await newEmpl === 'Add another team member..') {
-            addEmpl();
-    }
-         fs.writeFile('./dist', generateHTML(array), err) => {
-            if (err) {
-            return console.log(err);
-        } console.log("TeamProfile is GO!");
-    }
-    })
+            if (await newEmpl === 'Add another team member..') {
+                addEmpl();
+            } else {
+                fs.writeFile('./dist', generateHTML(array), err)
+                console.log("TeamProfile is GO!");
+            }
+        });
 };
 
 init();
