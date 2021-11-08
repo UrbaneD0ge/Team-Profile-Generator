@@ -81,7 +81,7 @@ function generateHTML(answers) {
         <div class="row row-cols-3">
             <div class="col my-2">
                 <div class="card card-body bg-dark">
-                    <h5 class="card-title text-light text-center">Manager</h5>
+                    <h5 class="card-title text-light text-center">${answers.role}</h5>
                     <ul class="list-group list-group">
                     <li class="list-group-item">${answers.name}</li>
                     <li class="list-group-item">${answers.email}</li>
