@@ -156,9 +156,9 @@ const addEmpl = async (array) => {
         .then(async (response) => {
         var newEmpl = response.addl;
             if (await newEmpl === 'Add another team member..') {
-                addEmpl();
+                newEmpl();
             } else {
-                fs.writeFile('./dist', generateHTML(array), err)
+                fs.writeFile('./dist/index.html', generateHTML(array), console.error)
                 console.log("TeamProfile is GO!");
             }
         });
