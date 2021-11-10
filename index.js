@@ -109,8 +109,8 @@ function generateHTML(answers) {
 
 // Declare init fn
 const init = () => {
-    console.log('TeamProfileGO! \n****************\n')
-    newEmpl()
+    console.log('TeamProfileGO! \n****************\n');
+    newEmpl();
 }
 
 // add employees fn
@@ -163,9 +163,9 @@ const addEmpl = async (array) => {
             choices: ['Add another team member..', 'I\'m finished!']
             }
         ])
-        .then(async (response) => {
+        .then((response) => {
         var anotherEmpl = response.addl;
-            if (await anotherEmpl === 'Add another team member..') {
+            if (anotherEmpl === 'Add another team member..') {
                 newEmpl();
             } else {
                 fs.writeFile('./dist/index.html', generateHTML(array), console.error)
