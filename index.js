@@ -17,7 +17,7 @@ const EmpQ = [
     {
     type: 'input',
     name: 'name',
-    message: 'What is the first employee\'s name?'
+    message: 'What is this employee\'s name?'
     },
     {
     type: 'input',
@@ -57,13 +57,13 @@ engQ = [
 intQ = [
     {
         type: 'input',
-        name: 'scol',
+        name: 'schl',
         message: 'What is their school?'
     }
 ];
 
 function generateHTML(answers) {
-    return `<!DOCTYPE html>
+    let html = `<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -79,22 +79,31 @@ function generateHTML(answers) {
     <body class="bg-lt">
         <div class="container">
         <div class="row row-cols-3">
-            <div class="col my-2">
-                <div class="card card-body bg-dark">
-                    <h5 class="card-title text-light text-center">${answers.role}</h5>
+            <div class="col my-2">`;
+    answers.forEach(employee => {
+        html += `<div class="card card-body bg-dark">
+                    <h5 class="card-title text-light text-center">${employee.role}</h5>
                     <ul class="list-group list-group">
-                    <li class="list-group-item">${answers.name}</li>
-                    <li class="list-group-item">${answers.email}</li>
-                    <li class="list-group-item">${answers.offc}</li>
-                </div>        
-            </div>
-    
+                    <li class="list-group-item">${employee.name}</li>
+                    <li class="list-group-item">${employee.email}</li>`;
+        switch (employee.role) {
+            case "Manager": html += `<li class ="list-group-item">Office #: ${employee.offc} </li>`;
+                break;
+            case "Engineer": html += `<li class="list-group-item">Github: ${employee.github}</li>`;
+                break;
+            case "Intern": html += `<li class="list-group-item">School: ${employee.school}</li>`;
+                break;
+        };
+        html += `</ul></div>`
+    });
+        html += `</div>
         </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script>
     </body>
     </html>
     `;
+    return html;
 };
 
 // Declare init fn
@@ -154,8 +163,8 @@ const addEmpl = async (array) => {
             }
         ])
         .then(async (response) => {
-        var newEmpl = response.addl;
-            if (await newEmpl === 'Add another team member..') {
+        var anotherEmpl = response.addl;
+            if (await anotherEmpl === 'Add another team member..') {
                 newEmpl();
             } else {
                 fs.writeFile('./dist/index.html', generateHTML(array), console.error)
