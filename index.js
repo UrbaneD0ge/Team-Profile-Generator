@@ -78,16 +78,16 @@ function generateHTML(answers) {
     </header>
     <body class="bg-lt">
         <div class="container">
-        <div class="row row-cols-3">
-            <div class="col my-2">`;
+            <div class="row row-cols-3">
+                <div class="col my-2">`;
     answers.forEach(employee => {
         html += `<div class="card card-body bg-dark">
-                    <h5 class="card-title text-light text-center">${employee.role}</h5>
-                    <ul class="list-group list-group">
+                <h5 class="card-title text-light text-center">${employee.getRole()}</h5>
+                <ul class="list-group list-group">
                     <li class="list-group-item">${employee.name}</li>
                     <li class="list-group-item">Id: ${employee.id}</li>
-                    <li class="list-group-item">Email: <a mailto:${employee.email}>${employee.email}</a></li>`;
-        switch (employee.role) {
+                    <li class="list-group-item">Email: <a href="mailto:${employee.email}">${employee.email}</a></li>`;
+        switch (employee.getRole()) {
             case "Manager": html += `<li class ="list-group-item">Office #: ${employee.officeNumber}</li>`;
                 break;
             case "Engineer": html += `<li class="list-group-item">Github: <a href="https://github.com/${employee.github}/" target="_blank">${employee.github}</a></li>`;
@@ -95,7 +95,7 @@ function generateHTML(answers) {
             case "Intern": html += `<li class="list-group-item">School: ${employee.school}</li>`;
                 break;
         };
-        html += `</ul></div>`
+        html += `\n</ul>\n</div>`
     });
         html += `</div>
         </div>
@@ -109,7 +109,7 @@ function generateHTML(answers) {
 
 // Declare init fn
 const init = () => {
-    console.log('TeamProfileGO! \n ****************\n')
+    console.log('TeamProfileGO! \n****************\n')
     newEmpl()
 }
 
