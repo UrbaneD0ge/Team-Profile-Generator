@@ -85,11 +85,12 @@ function generateHTML(answers) {
                     <h5 class="card-title text-light text-center">${employee.role}</h5>
                     <ul class="list-group list-group">
                     <li class="list-group-item">${employee.name}</li>
-                    <li class="list-group-item">${employee.email}</li>`;
+                    <li class="list-group-item">Id: ${employee.id}</li>
+                    <li class="list-group-item">Email: <a mailto:${employee.email}>${employee.email}</a></li>`;
         switch (employee.role) {
-            case "Manager": html += `<li class ="list-group-item">Office #: ${employee.offc} </li>`;
+            case "Manager": html += `<li class ="list-group-item">Office #: ${employee.officeNumber}</li>`;
                 break;
-            case "Engineer": html += `<li class="list-group-item">Github: ${employee.github}</li>`;
+            case "Engineer": html += `<li class="list-group-item">Github: <a href="https://github.com/${employee.github}/" target="_blank">${employee.github}</a></li>`;
                 break;
             case "Intern": html += `<li class="list-group-item">School: ${employee.school}</li>`;
                 break;
